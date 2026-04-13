@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DriveMate India — Peer-to-Peer Car Sharing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #fafaf8;
+  --cream: #f5f2eb;
+  --orange: #e8500a;
+  --orange-light: #ff6b2b;
+  --orange-pale: #fff2ec;
+  --charcoal: #1c1c1c;
+  --gray-dark: #333;
+  --gray-mid: #666;
+  --gray-light: #aaa;
+  --gray-pale: #e8e8e4;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem; font-weight: 800;
+  color: var(--black);
+  letter-spacing: -0.03em;
+}
+.nav-logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.875rem; font-weight: 400;
+  color: var(--gray-dark); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--orange); }
+.nav-cta {
+  background: var(--black); color: var(--white);
+  padding: 0.6rem 1.4rem; border-radius: 2px;
+  font-size: 0.875rem; font-weight: 500;
+  text-decoration: none; transition: background 0.2s;
+  font-family: var(--font-body);
+}
+.nav-cta:hover { background: var(--orange); }
+
+/* ── HERO ── */
+#home {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 3rem 5rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 70% 40%, #1a1a1a 0%, #0a0a0a 100%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-accent {
+  position: absolute; top: 8%; right: -5%;
+  width: 55vw; height: 55vw; max-width: 700px; max-height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,80,10,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232,80,10,0.15);
+  border: 1px solid rgba(232,80,10,0.3);
+  color: var(--orange-light);
+  padding: 0.4rem 1rem; border-radius: 2px;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.hero-tag::before {
+  content: ''; width: 6px; height: 6px; background: var(--orange-light); border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero-h1 {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 800; line-height: 0.95;
+  color: var(--white);
+  letter-spacing: -0.04em;
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+}
+.hero-h1 em {
+  font-style: normal; color: var(--orange);
+  display: block;
+}
+.hero-sub {
+  position: relative;
+  max-width: 500px;
+  font-size: 1.1rem; font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { position: relative; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.btn-primary {
+  background: var(--orange); color: var(--white);
+  padding: 0.9rem 2rem; border-radius: 2px;
+  font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--orange-light); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent; color: rgba(255,255,255,0.7);
+  padding: 0.9rem 2rem; border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.15);
+  font-family: var(--font-body); font-size: 0.95rem; font-weight: 400;
+  text-decoration: none; cursor: pointer;
+  transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+.hero-stats {
+  position: relative;
+  display: flex; gap: 3rem;
+  margin-top: 4rem; padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 700; color: var(--white);
+}
+.hero-stat-lbl { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+/* ── SECTION SHARED ── */
+section { padding: 6rem 3rem; }
+.section-label {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--orange);
+  margin-bottom: 0.75rem;
+}
+.section-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.03em; color: var(--black);
+  max-width: 700px; margin-bottom: 1rem;
+}
+.section-h2.light { color: var(--white); }
+.section-sub {
+  font-size: 1rem; color: var(--gray-mid); line-height: 1.7;
+  max-width: 580px; margin-bottom: 3rem;
+}
+.section-sub.light { color: rgba(255,255,255,0.5); }
+
+/* ── HOW IT WORKS ── */
+#how { background: var(--cream); }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px; background: rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.08);
+}
+.step {
+  background: var(--cream); padding: 2.5rem 2rem;
+  position: relative; transition: background 0.2s;
+}
+.step:hover { background: var(--white); }
+.step-num {
+  font-family: var(--font-display);
+  font-size: 4rem; font-weight: 800; color: rgba(0,0,0,0.06);
+  line-height: 1; margin-bottom: 1.5rem;
+}
+.step-icon {
+  width: 48px; height: 48px; border-radius: 2px;
+  background: var(--black); display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 1rem;
+}
+.step h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.step p { font-size: 0.875rem; color: var(--gray-mid); line-height: 1.65; }
+
+/* ── SEARCH BAR ── */
+.search-block {
+  background: var(--white); border: 1px solid var(--gray-pale);
+  border-radius: 2px; padding: 1.5rem 2rem;
+  display: grid; grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 1rem; align-items: end; max-width: 900px; margin: 0 auto 4rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.field label { font-size: 0.75rem; font-weight: 500; color: var(--gray-mid); display: block; margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+.field input, .field select {
+  width: 100%; padding: 0.65rem 0.8rem;
+  border: 1px solid var(--gray-pale); border-radius: 2px;
+  font-family: var(--font-body); font-size: 0.9rem; color: var(--black);
+  background: var(--white); outline: none;
+  transition: border-color 0.2s;
+}
+.field input:focus, .field select:focus { border-color: var(--orange); }
+
+/* ── CAR LISTINGS ── */
+#cars { background: var(--white); }
+.cars-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.car-card {
+  border: 1px solid var(--gray-pale); border-radius: 2px;
+  overflow: hidden; cursor: pointer;
+  transition: all 0.25s;
+}
+.car-card:hover { border-color: var(--orange); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+.car-img {
+  height: 200px; background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem; position: relative; overflow: hidden;
+}
+.car-img-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--cream) 0%, #ece8df 100%);
+}
+.car-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--black); color: var(--white);
+  padding: 3px 8px; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase; border-radius: 1px;
+}
+.car-badge.new { background: var(--orange); }
+.car-emoji { position: relative; font-size: 5rem; }
+.car-info { padding: 1.25rem; }
+.car-make { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+.car-meta { font-size: 0.8rem; color: var(--gray-mid); margin-top: 2px; margin-bottom: 12px; }
+.car-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tag {
+  font-size: 0.7rem; padding: 3px 8px; border-radius: 1px;
+  background: var(--cream); color: var(--gray-dark);
+  font-weight: 500; letter-spacing: 0.02em;
+}
+.car-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--gray-pale); }
+.car-price { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; }
+.car-price span { font-size: 0.75rem; font-weight: 400; color: var(--gray-mid); }
+.car-rating { font-size: 0.8rem; color: var(--gray-mid); display: flex; align-items: center; gap: 4px; }
+.star { color: #f59e0b; }
+
+/* ── EARN ── */
+#earn { background: var(--black); color: var(--white); }
+.earn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.earn-visual {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 2px; padding: 2rem;
+}
+.earn-calc-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.earn-calc-row:last-child { border-bottom: none; font-size: 1.1rem; font-weight: 500; }
+.earn-calc-label { font-size: 0.875rem; color: rgba(255,255,255,0.5); }
+.earn-calc-val { font-family: var(--font-display); font-weight: 600; color: var(--white); }
+.earn-calc-val.highlight { color: var(--orange); font-size: 1.4rem; }
+.income-slider-wrap { margin: 1.5rem 0; }
+.income-slider-wrap label { font-size: 0.8rem; color: rgba(255,255,255,0.5); display: block; margin-bottom: 8px; }
+.income-slider {
+  width: 100%; accent-color: var(--orange);
+  height: 4px; cursor: pointer;
+}
+.earn-features { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
+.earn-feat { display: flex; gap: 1rem; align-items: flex-start; }
+.earn-feat-icon { width: 36px; height: 36px; background: rgba(232,80,10,0.15); border: 1px solid rgba(232,80,10,0.25); border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; }
+.earn-feat h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 3px; }
+.earn-feat p { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+/* ── BUSINESS PLAN ── */
+#plan { background: var(--white); }
+.plan-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--gray-pale); margin-bottom: 3rem; overflow-x: auto; }
+.plan-tab {
+  padding: 0.9rem 1.5rem; font-size: 0.875rem; font-weight: 500;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  color: var(--gray-mid); white-space: nowrap; transition: all 0.15s;
+}
+.plan-tab.active { color: var(--black); border-bottom-color: var(--orange); }
+.plan-tab:hover:not(.active) { color: var(--black); }
+.plan-content { display: none; }
+.plan-content.active { display: block; }
+
+/* financials */
+.fin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+.fin-card {
+  border: 1px solid var(--gray-pale); padding: 1.25rem;
+  border-radius: 2px;
+}
+.fin-card .val { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--black); }
+.fin-card .lbl { font-size: 0.75rem; color: var(--gray-mid); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+.fin-card.accent { background: var(--black); border-color: var(--black); }
+.fin-card.accent .val { color: var(--orange); }
+.fin-card.accent .lbl { color: rgba(255,255,255,0.4); }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+th { text-align: left; padding: 10px 14px; background: var(--cream); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-dark); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--gray-pale); color: var(--gray-dark); }
+tr:last-child td { border-bottom: none; font-weight: 600; color: var(--black); }
+td.positive { color: #16a34a; font-weight: 600; }
+td.negative { color: #dc2626; }
+
+/* roadmap */
+.roadmap-list { display: flex; flex-direction: column; gap: 0; }
+.roadmap-item {
+  display: grid; grid-template-columns: 120px 1fr;
+  gap: 2rem; padding: 2rem 0;
+  border-bottom: 1px solid var(--gray-pale);
+  position: relative;
+}
+.roadmap-item:last-child { border-bottom: none; }
+.phase-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem; font-weight: 600; color: var(--orange);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding-top: 3px;
+}
+.roadmap-h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.roadmap-desc { font-size: 0.875rem; color: var(--gray-mid); line-height: 1.65; margin-bottom: 1rem; }
+.milestone-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--cream); border: 1px solid var(--gray-pale); padding: 4px 10px; font-size: 0.75rem; border-radius: 1px; color: var(--gray-dark); }
+
+/* market */
+.market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.market-card { border: 1px solid var(--gray-pale); padding: 1.5rem; border-radius: 2px; }
+.market-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+.bar-item { margin-bottom: 14px; }
+.bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px; }
+.bar-track { height: 6px; background: var(--gray-pale); border-radius: 0; }
+.bar-fill { height: 100%; background: var(--orange); border-radius: 0; transition: width 1s ease; }
+.bar-fill.teal { background: #0f766e; }
+.bar-fill.blue { background: #2563eb; }
+
+/* tech */
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.tech-card { border: 1px solid var(--gray-pale); padding: 1.25rem; border-radius: 2px; }
+.tech-card h4 { font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-mid); margin-bottom: 0.75rem; }
+.tech-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.tech-list li { font-size: 0.875rem; color: var(--gray-dark); display: flex; align-items: center; gap: 8px; }
+.tech-list li::before { content: '→'; color: var(--orange); font-size: 0.7rem; }
+
+/* ── TRUST ── */
+#trust { background: var(--cream); }
+.trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.trust-card { background: var(--white); border: 1px solid rgba(0,0,0,0.06); padding: 1.75rem; border-radius: 2px; }
+.trust-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+.trust-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.trust-card p { font-size: 0.85rem; color: var(--gray-mid); line-height: 1.65; }
+
+/* ── TESTIMONIALS ── */
+#reviews { background: var(--white); padding: 5rem 3rem; }
+.reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.review-card { border: 1px solid var(--gray-pale); padding: 1.5rem; border-radius: 2px; }
+.review-stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 1rem; }
+.review-text { font-size: 0.9rem; line-height: 1.7; color: var(--gray-dark); margin-bottom: 1.25rem; font-style: italic; }
+.review-author { display: flex; align-items: center; gap: 10px; }
+.review-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: var(--white); }
+.review-name { font-size: 0.875rem; font-weight: 500; }
+.review-loc { font-size: 0.75rem; color: var(--gray-light); }
+
+/* ── CTA SECTION ── */
+#cta { background: var(--orange); padding: 5rem 3rem; text-align: center; }
+#cta h2 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; margin-bottom: 1rem; }
+#cta p { font-size: 1.1rem; color: rgba(255,255,255,0.75); margin-bottom: 2rem; }
+.cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-white { background: var(--white); color: var(--orange); padding: 0.9rem 2rem; border-radius: 2px; font-weight: 500; text-decoration: none; font-family: var(--font-body); transition: all 0.2s; }
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.btn-white-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.5); padding: 0.9rem 2rem; border-radius: 2px; font-weight: 500; text-decoration: none; font-family: var(--font-body); transition: all 0.2s; }
+.btn-white-outline:hover { border-color: var(--white); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--charcoal); color: rgba(255,255,255,0.5);
+  padding: 3rem; display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem;
+}
+.footer-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: 0.75rem; }
+.footer-logo span { color: var(--orange); }
+.footer-desc { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+.footer-col h4 { font-size: 0.8rem; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
+.footer-col a { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 6px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--orange); }
+.footer-bottom { background: var(--black); padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: rgba(255,255,255,0.25); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); z-index: 200;
+  align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white); max-width: 520px; width: 100%;
+  border-radius: 2px; padding: 2.5rem; position: relative;
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--gray-mid); }
+.modal h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+.modal p { font-size: 0.875rem; color: var(--gray-mid); margin-bottom: 1.5rem; }
+.form-group { margin-bottom: 1.2rem; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 5px; color: var(--gray-dark); text-transform: uppercase; letter-spacing: 0.03em; }
+.form-group input, .form-group select {
+  width: 100%; padding: 0.7rem 0.9rem;
+  border: 1px solid var(--gray-pale); border-radius: 2px;
+  font-family: var(--font-body); font-size: 0.9rem; color: var(--black);
+  outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--orange); }
+.modal-tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border: 1px solid var(--gray-pale); border-radius: 2px; overflow: hidden; }
+.modal-tab { flex: 1; padding: 0.65rem; text-align: center; font-size: 0.875rem; cursor: pointer; transition: all 0.15s; }
+.modal-tab.active { background: var(--black); color: var(--white); font-weight: 500; }
+
+/* ── ANIMATIONS ── */
+.fade-in { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.5rem; }
+  #home { padding: 0 1.5rem 4rem; }
+  .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+  .earn-grid, .market-grid { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr 1fr; }
+  .search-block { grid-template-columns: 1fr; }
+  .roadmap-item { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Drive<span>Mate</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#cars">Browse Cars</a></li>
+    <li><a href="#earn">Earn with Us</a></li>
+    <li><a href="#trust">Safety</a></li>
+    <li><a href="#plan">Business Plan</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openModal('renter')">Get Started</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-tag">Now live in 8 Indian cities</div>
+  <h1 class="hero-h1">Your neighbour's car.<br><em>Your next drive.</em></h1>
+  <p class="hero-sub">India's first peer-to-peer car sharing platform. Rent verified cars from trusted hosts nearby — or earn ₹40,000/month from your idle car.</p>
+  <div class="hero-actions">
+    <a href="#cars" class="btn-primary">Find a Car ↓</a>
+    <a href="#earn" class="btn-outline">List Your Car →</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">35M+</div>
+      <div class="hero-stat-lbl">Idle cars in India</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">₹12,000Cr</div>
+      <div class="hero-stat-lbl">Market opportunity</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">₹40K</div>
+      <div class="hero-stat-lbl">Monthly host earnings</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">30%</div>
+      <div class="hero-stat-lbl">Cheaper than Ola/Uber</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">How it works</div>
+  <h2 class="section-h2">Three steps to your next drive</h2>
+  <p class="section-sub">Renting is as easy as ordering food online. No paperwork, no counters, no waiting.</p>
+
+  <!-- SEARCH BAR -->
+  <div class="search-block">
+    <div class="field">
+      <label>Location</label>
+      <input type="text" placeholder="Gurugram, Sector 29" />
+    </div>
+    <div class="field">
+      <label>Pick-up Date</label>
+      <input type="date" />
+    </div>
+    <div class="field">
+      <label>Return Date</label>
+      <input type="date" />
+    </div>
+    <button class="btn-primary" onclick="document.getElementById('cars').scrollIntoView({behavior:'smooth'})">Search →</button>
+  </div>
+
+  <div class="steps-grid">
+    <div class="step fade-in">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <h3>Search & Choose</h3>
+      <p>Browse verified cars near you — hatchbacks to SUVs. Filter by price, fuel type, rating, and distance.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">02</div>
+      <div class="step-icon">📱</div>
+      <h3>Book Instantly</h3>
+      <p>Select dates, pay securely via UPI or card. Get keyless digital access or meet the host for key handover.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">03</div>
+      <div class="step-icon">🚗</div>
+      <h3>Drive & Return</h3>
+      <p>Take photos at pickup, enjoy your trip. Return on time and rate your experience. Simple as that.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">04</div>
+      <div class="step-icon">🛡️</div>
+      <h3>Fully Insured</h3>
+      <p>Every trip covered by our partner insurance up to ₹10 lakhs. Both host and renter protected.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARS -->
+<section id="cars">
+  <div class="section-label">Available now</div>
+  <h2 class="section-h2">Cars near Gurugram</h2>
+  <p class="section-sub">Real cars, real hosts, real reviews. All vehicles are RC-verified and host-ID checked.</p>
+  <div class="cars-grid" id="car-listings"></div>
+</section>
+
+<!-- EARN -->
+<section id="earn">
+  <div class="earn-grid">
+    <div>
+      <div class="section-label" style="color:#f97316">For car owners</div>
+      <h2 class="section-h2 light">Your car earns while you sleep</h2>
+      <p class="section-sub light">The average Indian car sits idle 22 hours a day. Turn those hours into ₹20,000–₹45,000 every month.</p>
+      <div class="earn-features">
+        <div class="earn-feat">
+          <div class="earn-feat-icon">🛡️</div>
+          <div><h4>₹10L insurance cover</h4><p>Every trip fully insured. You're protected from Day 1.</p></div>
+        </div>
+        <div class="earn-feat">
+          <div class="earn-feat-icon">📸</div>
+          <div><h4>Photo-verified handover</h4><p>AI damage detection before and after every trip.</p></div>
+        </div>
+        <div class="earn-feat">
+          <div class="earn-feat-icon">💸</div>
+          <div><h4>Instant payouts</h4><p>Get paid to your bank account within 24 hours of trip end.</p></div>
+        </div>
+        <div class="earn-feat">
+          <div class="earn-feat-icon">📅</div>
+          <div><h4>You set availability</h4><p>Block dates anytime. Rent only when you want to.</p></div>
+        </div>
+      </div>
+      <button class="btn-primary" style="margin-top:2rem" onclick="openModal('host')">List Your Car Free →</button>
+    </div>
+    <div class="earn-visual">
+      <div style="font-size:0.8rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.5rem">Earnings Calculator</div>
+      <div class="income-slider-wrap">
+        <label>Days rented per month: <strong id="days-val" style="color:var(--orange-light)">15</strong></label>
+        <input type="range" class="income-slider" min="5" max="28" value="15" id="days-slider" oninput="calcEarnings()">
+      </div>
+      <div class="income-slider-wrap">
+        <label>Daily rental price: <strong id="price-val" style="color:var(--orange-light)">₹1,200</strong></label>
+        <input type="range" class="income-slider" min="600" max="3500" step="100" value="1200" id="price-slider" oninput="calcEarnings()">
+      </div>
+      <div class="earn-calc-row"><span class="earn-calc-label">Gross earnings</span><span class="earn-calc-val" id="gross">₹18,000</span></div>
+      <div class="earn-calc-row"><span class="earn-calc-label">DriveMate fee (25%)</span><span class="earn-calc-val" id="fee" style="color:#f87171">−₹4,500</span></div>
+      <div class="earn-calc-row"><span class="earn-calc-label">Fuel / cleaning</span><span class="earn-calc-val" style="color:#f87171">−₹1,500</span></div>
+      <div class="earn-calc-row"><span class="earn-calc-label">Your monthly earnings</span><span class="earn-calc-val highlight" id="net">₹12,000</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <div class="section-label">Safety first</div>
+  <h2 class="section-h2">Built on trust, backed by technology</h2>
+  <p class="section-sub">We verify every host and renter so you can drive with complete peace of mind.</p>
+  <div class="trust-grid">
+    <div class="trust-card fade-in">
+      <div class="trust-icon">🪪</div>
+      <h3>3-layer identity verification</h3>
+      <p>Aadhaar, PAN, and driving licence verified for every user. Facial liveness check on every signup.</p>
+    </div>
+    <div class="trust-card fade-in">
+      <div class="trust-icon">📋</div>
+      <h3>RC & pollution verified</h3>
+      <p>All listed vehicles cross-checked with Vahan database. Only roadworthy cars allowed.</p>
+    </div>
+    <div class="trust-card fade-in">
+      <div class="trust-icon">🛡️</div>
+      <h3>Acko trip insurance</h3>
+      <p>Every trip covered up to ₹10 lakhs for accidental damage. Renters and hosts both protected.</p>
+    </div>
+    <div class="trust-card fade-in">
+      <div class="trust-icon">📍</div>
+      <h3>Live GPS tracking</h3>
+      <p>Real-time location visible to the host. Geo-fencing alerts for out-of-city trips.</p>
+    </div>
+    <div class="trust-card fade-in">
+      <div class="trust-icon">⭐</div>
+      <h3>Two-way rating system</h3>
+      <p>Hosts and renters rate each other after every trip. Low-rated users are auto-suspended.</p>
+    </div>
+    <div class="trust-card fade-in">
+      <div class="trust-icon">📞</div>
+      <h3>24/7 emergency support</h3>
+      <p>Dedicated helpline for breakdowns, accidents, or disputes. Response within 15 minutes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS PLAN -->
+<section id="plan">
+  <div class="section-label">For investors & founders</div>
+  <h2 class="section-h2">Complete Business Plan</h2>
+  <p class="section-sub">Full financial projections, market analysis, tech stack, and go-to-market strategy for DriveMate India.</p>
+
+  <div class="plan-tabs">
+    <div class="plan-tab active" onclick="showPlan('financials')">📊 Financials</div>
+    <div class="plan-tab" onclick="showPlan('market')">🌏 Market Analysis</div>
+    <div class="plan-tab" onclick="showPlan('roadmap')">🗓️ Roadmap</div>
+    <div class="plan-tab" onclick="showPlan('tech')">⚙️ Tech Stack</div>
+    <div class="plan-tab" onclick="showPlan('legal')">⚖️ Legal & Ops</div>
+  </div>
+
+  <!-- FINANCIALS -->
+  <div class="plan-content active" id="plan-financials">
+    <div class="fin-grid">
+      <div class="fin-card"><div class="val">₹1.8 Cr</div><div class="lbl">Total Startup Cost</div></div>
+      <div class="fin-card"><div class="val">₹85L</div><div class="lbl">Year 1 Revenue</div></div>
+      <div class="fin-card"><div class="val">₹4.2 Cr</div><div class="lbl">Year 2 Revenue</div></div>
+      <div class="fin-card accent"><div class="val">Month 28</div><div class="lbl">Break-even Point</div></div>
+      <div class="fin-card"><div class="val">25%</div><div class="lbl">Commission Rate</div></div>
+      <div class="fin-card"><div class="val">₹12,000 Cr</div><div class="lbl">Addressable Market</div></div>
+    </div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:1rem">Startup Cost Breakdown</h3>
+    <div class="table-wrap" style="margin-bottom:2.5rem">
+      <table>
+        <thead><tr><th>Category</th><th>Item</th><th>Cost (₹)</th></tr></thead>
+        <tbody>
+          <tr><td>Technology</td><td>iOS + Android app development</td><td>45,00,000</td></tr>
+          <tr><td>Technology</td><td>Web platform + admin dashboard</td><td>15,00,000</td></tr>
+          <tr><td>Technology</td><td>GPS integration & IoT device setup</td><td>12,00,000</td></tr>
+          <tr><td>Insurance</td><td>Insurance product structuring + legal</td><td>20,00,000</td></tr>
+          <tr><td>Operations</td><td>City ops team (3 cities × 6 months)</td><td>36,00,000</td></tr>
+          <tr><td>Marketing</td><td>Launch campaign (digital + offline)</td><td>25,00,000</td></tr>
+          <tr><td>Legal</td><td>Company reg, compliance, IP</td><td>8,00,000</td></tr>
+          <tr><td>Misc</td><td>Working capital buffer</td><td>19,00,000</td></tr>
+          <tr><td colspan="2"><strong>TOTAL</strong></td><td><strong>1,80,00,000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:1rem">3-Year P&L Projection</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr></thead>
+        <tbody>
+          <tr><td>Active cars listed</td><td>500</td><td>3,500</td><td>15,000</td></tr>
+          <tr><td>Monthly trips</td><td>800</td><td>7,000</td><td>35,000</td></tr>
+          <tr><td>Avg trip value (₹)</td><td>2,400</td><td>2,800</td><td>3,000</td></tr>
+          <tr><td>Gross Merchandise Value</td><td>2.3 Cr</td><td>23.5 Cr</td><td>1.26 Cr (₹126 Cr)</td></tr>
+          <tr><td>Net Revenue (25% take rate)</td><td>57.6 L</td><td>5.9 Cr</td><td>31.5 Cr</td></tr>
+          <tr><td>Operating Expenses</td><td>1.8 Cr</td><td>3.2 Cr</td><td>12 Cr</td></tr>
+          <tr><td>EBITDA</td><td class="negative">−1.22 Cr</td><td class="positive">+2.7 Cr</td><td class="positive">+19.5 Cr</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MARKET -->
+  <div class="plan-content" id="plan-market">
+    <div class="market-grid">
+      <div class="market-card">
+        <h3>Market Sizing (TAM/SAM/SOM)</h3>
+        <div class="bar-item"><div class="bar-label"><span>TAM — India car rental</span><span>₹12,000 Cr</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>SAM — P2P addressable (10 cities)</span><span>₹3,600 Cr</span></div><div class="bar-track"><div class="bar-fill teal" style="width:30%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>SOM — Year 3 realistic target</span><span>₹126 Cr GMV</span></div><div class="bar-track"><div class="bar-fill blue" style="width:3.5%"></div></div></div>
+        <p style="font-size:0.8rem;color:var(--gray-mid);margin-top:1rem;line-height:1.6">India has 35M+ registered cars with 22+ hrs/day idle time. Growing middle class, rising fuel costs, and gig economy create perfect conditions.</p>
+      </div>
+      <div class="market-card">
+        <h3>Competitive Landscape</h3>
+        <div class="bar-item"><div class="bar-label"><span>Zoomcar (B2C fleet)</span><span>Strong but declining</span></div><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>Drivezy (shutdown 2020)</span><span>Left gap in market</span></div><div class="bar-track"><div class="bar-fill teal" style="width:0%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>Ola/Uber (ride-hailing)</span><span>Different use-case</span></div><div class="bar-track"><div class="bar-fill blue" style="width:80%"></div></div></div>
+        <div class="bar-item"><div class="bar-label"><span>P2P Car Sharing</span><span>Near zero — our opportunity</span></div><div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--orange)"></div></div></div>
+        <p style="font-size:0.8rem;color:var(--gray-mid);margin-top:1rem;line-height:1.6">No organized P2P player in India. Turo (USA) is $1.2B. We have a clear first-mover window of 18–24 months.</p>
+      </div>
+      <div class="market-card">
+        <h3>Target Segments</h3>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;font-size:0.875rem;padding:8px 0;border-bottom:1px solid var(--gray-pale)"><span>Urban millennials (25–35)</span><span style="color:var(--orange);font-weight:600">42%</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.875rem;padding:8px 0;border-bottom:1px solid var(--gray-pale)"><span>Weekend/leisure travellers</span><span style="color:var(--orange);font-weight:600">28%</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.875rem;padding:8px 0;border-bottom:1px solid var(--gray-pale)"><span>Business travellers</span><span style="color:var(--orange);font-weight:600">18%</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.875rem;padding:8px 0"><span>Tourists & outstation trips</span><span style="color:var(--orange);font-weight:600">12%</span></div>
+        </div>
+      </div>
+      <div class="market-card">
+        <h3>Unit Economics (Per Trip)</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:0.875rem">
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-pale)"><span>Average trip value</span><span>₹2,800</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-pale)"><span>DriveMate commission</span><span style="color:#16a34a">+₹700</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-pale)"><span>Insurance cost</span><span style="color:#dc2626">−₹120</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-pale)"><span>Payment gateway</span><span style="color:#dc2626">−₹42</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-pale)"><span>Customer support cost</span><span style="color:#dc2626">−₹80</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;font-weight:600"><span>Net margin per trip</span><span style="color:var(--orange)">₹458 (16.4%)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="plan-content" id="plan-roadmap">
+    <div class="roadmap-list">
+      <div class="roadmap-item">
+        <div class="phase-label">Phase 1<br>Month 1–3</div>
+        <div>
+          <div class="roadmap-h3">Foundation & Legal Setup</div>
+          <div class="roadmap-desc">Register Pvt Ltd, structure insurance product with Acko/HDFC Ergo, onboard 50 hosts in Gurugram through direct outreach, build MVP app (no keyless — physical handover), hire 5-person founding team.</div>
+          <div class="milestone-chips">
+            <span class="chip">Company registered</span>
+            <span class="chip">Insurance MOU signed</span>
+            <span class="chip">50 cars listed</span>
+            <span class="chip">MVP app live</span>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="phase-label">Phase 2<br>Month 4–6</div>
+        <div>
+          <div class="roadmap-h3">Pilot Launch — Gurugram</div>
+          <div class="roadmap-desc">Launch publicly in Gurugram. Target 200 renter signups via referral program. Collect NPS weekly. Build trust through host events and renter support. First media coverage.</div>
+          <div class="milestone-chips">
+            <span class="chip">200 renters</span>
+            <span class="chip">150 trips completed</span>
+            <span class="chip">NPS > 50</span>
+            <span class="chip">Zero major incidents</span>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="phase-label">Phase 3<br>Month 7–12</div>
+        <div>
+          <div class="roadmap-h3">Expand to 3 Cities</div>
+          <div class="roadmap-desc">Launch Delhi, Bengaluru. 500 cars, 800 monthly trips. Raise Seed round of ₹5 Cr. Launch keyless access pilot with IoT device. Introduce subscription plan for frequent renters.</div>
+          <div class="milestone-chips">
+            <span class="chip">₹5 Cr seed raised</span>
+            <span class="chip">500 cars listed</span>
+            <span class="chip">3 cities live</span>
+            <span class="chip">Keyless pilot</span>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="phase-label">Phase 4<br>Year 2</div>
+        <div>
+          <div class="roadmap-h3">Scale to 10 Cities</div>
+          <div class="roadmap-desc">Expand to Mumbai, Hyderabad, Pune, Chennai, Ahmedabad, Jaipur, Kolkata. 3,500 cars, 7,000 monthly trips. Series A raise of ₹25 Cr. Launch EV car category. B2B corporate accounts.</div>
+          <div class="milestone-chips">
+            <span class="chip">₹25 Cr Series A</span>
+            <span class="chip">10 cities</span>
+            <span class="chip">3,500 cars</span>
+            <span class="chip">EV category</span>
+            <span class="chip">Break-even path</span>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="phase-label">Phase 5<br>Year 3</div>
+        <div>
+          <div class="roadmap-h3">Market Leadership & Profitability</div>
+          <div class="roadmap-desc">15,000 cars, 35,000 trips/month, ₹126 Cr GMV. EBITDA positive. Launch DriveMate Finance (host car loans). Explore Series B. International expansion to SE Asia.</div>
+          <div class="milestone-chips">
+            <span class="chip">EBITDA positive</span>
+            <span class="chip">15,000 cars</span>
+            <span class="chip">₹126 Cr GMV</span>
+            <span class="chip">Series B ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH -->
+  <div class="plan-content" id="plan-tech">
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h4>Mobile Apps</h4>
+        <ul class="tech-list">
+          <li>React Native (iOS + Android)</li>
+          <li>Expo for rapid deployment</li>
+          <li>Deep linking for bookings</li>
+          <li>Offline map caching</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>Backend</h4>
+        <ul class="tech-list">
+          <li>Node.js + Express microservices</li>
+          <li>PostgreSQL (core DB)</li>
+          <li>Redis (sessions, caching)</li>
+          <li>AWS / GCP cloud infra</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>Payments</h4>
+        <ul class="tech-list">
+          <li>Razorpay (UPI, cards, wallets)</li>
+          <li>Auto-refund engine</li>
+          <li>Escrow for host payouts</li>
+          <li>GST invoice generation</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>Verification & Trust</h4>
+        <ul class="tech-list">
+          <li>DigiLocker API (Aadhaar/DL)</li>
+          <li>Vahan API (RC verification)</li>
+          <li>Facematch AI (liveness)</li>
+          <li>Seon fraud detection</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>Maps & IoT</h4>
+        <ul class="tech-list">
+          <li>Google Maps + Mapbox</li>
+          <li>GPS tracker integration</li>
+          <li>IoT OBD device (keyless)</li>
+          <li>Twilio SMS/WhatsApp OTP</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h4>AI & Analytics</h4>
+        <ul class="tech-list">
+          <li>AI damage detection (photos)</li>
+          <li>Dynamic pricing engine</li>
+          <li>Mixpanel user analytics</li>
+          <li>Metabase BI dashboard</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:2rem;padding:1.5rem;background:var(--cream);border-radius:2px">
+      <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:0.75rem">Development Timeline & Cost</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Module</th><th>Timeline</th><th>Cost (₹)</th><th>Team</th></tr></thead>
+          <tbody>
+            <tr><td>MVP (host + renter app)</td><td>10 weeks</td><td>25,00,000</td><td>2 dev + 1 designer</td></tr>
+            <tr><td>Identity verification</td><td>3 weeks</td><td>5,00,000</td><td>1 backend dev</td></tr>
+            <tr><td>Payment & escrow</td><td>4 weeks</td><td>8,00,000</td><td>1 backend dev</td></tr>
+            <tr><td>Admin dashboard</td><td>3 weeks</td><td>6,00,000</td><td>1 full-stack dev</td></tr>
+            <tr><td>GPS + IoT integration</td><td>6 weeks</td><td>12,00,000</td><td>1 backend + IoT partner</td></tr>
+            <tr><td>AI damage detection</td><td>8 weeks</td><td>15,00,000</td><td>1 ML engineer</td></tr>
+            <tr><td colspan="2"><strong>Total</strong></td><td><strong>71,00,000</strong></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGAL -->
+  <div class="plan-content" id="plan-legal">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem">
+      <div style="border:1px solid var(--gray-pale);padding:1.5rem;border-radius:2px">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:1rem">Company Structure</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--gray-dark)">
+          <li>✓ Private Limited Company (MCA)</li>
+          <li>✓ GST registration (18% on commission)</li>
+          <li>✓ Startup India DPIIT registration</li>
+          <li>✓ RBI NBFC license (if lending)</li>
+          <li>✓ Information Technology Act compliance</li>
+          <li>✓ Consumer Protection Act compliance</li>
+        </ul>
+      </div>
+      <div style="border:1px solid var(--gray-pale);padding:1.5rem;border-radius:2px">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:1rem">Insurance Framework</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--gray-dark)">
+          <li>✓ Short-term motor policy (per-trip)</li>
+          <li>✓ Third-party liability coverage</li>
+          <li>✓ Own damage protection</li>
+          <li>✓ Personal accident cover (renter)</li>
+          <li>✓ Partner: Acko or HDFC Ergo</li>
+          <li>✓ Premium: ₹80–150 per trip day</li>
+        </ul>
+      </div>
+      <div style="border:1px solid var(--gray-pale);padding:1.5rem;border-radius:2px">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:1rem">Key Risks & Mitigations</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--gray-dark)">
+          <li>⚠️ Damage disputes → AI photo evidence</li>
+          <li>⚠️ Insurance gaps → dedicated counsel</li>
+          <li>⚠️ RTO compliance → legal advisory</li>
+          <li>⚠️ Trust issues → KYC + review system</li>
+          <li>⚠️ Regulatory change → compliance team</li>
+        </ul>
+      </div>
+      <div style="border:1px solid var(--gray-pale);padding:1.5rem;border-radius:2px">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:1rem">Go-to-Market Strategy</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--gray-dark)">
+          <li>🎯 Instagram/YouTube host acquisition</li>
+          <li>🎯 Apartment society ambassador program</li>
+          <li>🎯 Weekend trip content marketing</li>
+          <li>🎯 Corporate tie-ups (employee benefit)</li>
+          <li>🎯 Referral: ₹500 off on first trip</li>
+          <li>🎯 PR: "Turo of India" positioning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-label">Social proof</div>
+  <h2 class="section-h2">What our early users say</h2>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Rented a Swift for a Manali trip. Way cheaper than Zoomcar and the host was super helpful. The app is smooth — booking took 4 minutes!"</p>
+      <div class="review-author"><div class="review-avatar">RK</div><div><div class="review-name">Rohit Kumar</div><div class="review-loc">Gurugram · Renter</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"I earn ₹28,000/month from my Nexon that used to just sit in the parking. The payouts are on time and the insurance gives me full peace of mind."</p>
+      <div class="review-author"><div class="review-avatar">PS</div><div><div class="review-name">Priya Sharma</div><div class="review-loc">Noida · Host</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">"Used it for a client meeting when my car was in service. Picked up an Innova 2 km away, spotless condition. Will use every time now."</p>
+      <div class="review-author"><div class="review-avatar">AJ</div><div><div class="review-name">Arjun Jain</div><div class="review-loc">Delhi · Renter</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2>India's car-sharing revolution starts here.</h2>
+  <p>Join 10,000+ hosts and renters already on DriveMate waitlist.</p>
+  <div class="cta-buttons">
+    <a href="#" class="btn-white" onclick="openModal('renter')">Rent a Car</a>
+    <a href="#" class="btn-white-outline" onclick="openModal('host')">List Your Car</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Drive<span>Mate</span></div>
+    <p class="footer-desc">India's first peer-to-peer car sharing platform. Connecting idle cars with people who need them.</p>
+    <p style="font-size:0.8rem;margin-top:1rem">📍 Gurugram · Delhi · Bengaluru</p>
+  </div>
+  <div class="footer-col">
+    <h4>For Renters</h4>
+    <a href="#">How it works</a>
+    <a href="#">Browse cars</a>
+    <a href="#">Insurance</a>
+    <a href="#">Pricing</a>
+    <a href="#">FAQs</a>
+  </div>
+  <div class="footer-col">
+    <h4>For Hosts</h4>
+    <a href="#">List your car</a>
+    <a href="#">Earnings calculator</a>
+    <a href="#">Host protection</a>
+    <a href="#">Host community</a>
+  </div>
+  <div class="footer-col">
+    <h4>Company</h4>
+    <a href="#">About us</a>
+    <a href="#">Investor deck</a>
+    <a href="#">Careers</a>
+    <a href="#">Press</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 DriveMate Technologies Pvt Ltd · Gurugram, Haryana</span>
+  <span>Privacy · Terms · Refund Policy</span>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ── CAR DATA ── */
+const cars = [
+  {emoji:'🚗',make:'Maruti Swift VXI',meta:'2022 · Petrol · Manual · Gurugram Sector 56',tags:['AC','Bluetooth','4 Seats'],price:'₹899',unit:'/day',rating:'4.9',trips:'87',badge:'',badgeType:''},
+  {emoji:'🚙',make:'Hyundai Creta SX',meta:'2023 · Petrol · Automatic · Gurugram Sector 14',tags:['AC','Sunroof','5 Seats','GPS'],price:'₹1,799',unit:'/day',rating:'4.8',trips:'54',badge:'TOP RATED',badgeType:''},
+  {emoji:'🛻',make:'Toyota Innova Crysta',meta:'2021 · Diesel · Manual · Delhi Dwarka',tags:['AC','7 Seats','Luggage','GPS'],price:'₹2,499',unit:'/day',rating:'4.7',trips:'132',badge:'',badgeType:''},
+  {emoji:'🚗',make:'Honda City ZX',meta:'2023 · Petrol · CVT · Noida Sector 62',tags:['AC','Sunroof','5 Seats'],price:'₹1,399',unit:'/day',rating:'5.0',trips:'23',badge:'NEW',badgeType:'new'},
+  {emoji:'⚡',make:'Tata Nexon EV',meta:'2024 · Electric · Automatic · Gurugram DLF',tags:['AC','EV','Fast Charge','5 Seats'],price:'₹1,999',unit:'/day',rating:'4.9',trips:'41',badge:'EV',badgeType:'new'},
+  {emoji:'🚙',make:'Mahindra XUV 700',meta:'2023 · Diesel · Automatic · Delhi South',tags:['AC','7 Seats','ADAS','Sunroof'],price:'₹2,999',unit:'/day',rating:'4.8',trips:'19',badge:'PREMIUM',badgeType:''},
+];
+
+function renderCars(){
+  document.getElementById('car-listings').innerHTML = cars.map(c=>`
+    <div class="car-card" onclick="openModal('book')">
+      <div class="car-img">
+        <div class="car-img-bg"></div>
+        ${c.badge?`<div class="car-badge ${c.badgeType}">${c.badge}</div>`:''}
+        <div class="car-emoji">${c.emoji}</div>
+      </div>
+      <div class="car-info">
+        <div class="car-make">${c.make}</div>
+        <div class="car-meta">${c.meta}</div>
+        <div class="car-tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <div class="car-footer">
+          <div class="car-price">${c.price}<span>${c.unit}</span></div>
+          <div class="car-rating"><span class="star">★</span> ${c.rating} · ${c.trips} trips</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── EARNINGS CALC ── */
+function calcEarnings(){
+  const days = +document.getElementById('days-slider').value;
+  const price = +document.getElementById('price-slider').value;
+  document.getElementById('days-val').textContent = days;
+  document.getElementById('price-val').textContent = '₹'+price.toLocaleString('en-IN');
+  const gross = days*price;
+  const fee = Math.round(gross*0.25);
+  const net = gross - fee - 1500;
+  document.getElementById('gross').textContent = '₹'+gross.toLocaleString('en-IN');
+  document.getElementById('fee').textContent = '−₹'+fee.toLocaleString('en-IN');
+  document.getElementById('net').textContent = '₹'+net.toLocaleString('en-IN');
+}
+
+/* ── MODAL ── */
+function openModal(type){
+  const m = document.getElementById('modal');
+  const b = document.getElementById('modal-body');
+  if(type==='renter'){
+    b.innerHTML=`
+      <h2>Find your perfect car</h2>
+      <p>Join 50,000+ renters on DriveMate. Signup takes 2 minutes.</p>
+      <div class="modal-tabs"><div class="modal-tab active">Sign Up</div><div class="modal-tab" onclick="this.parentElement.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active')">Log In</div></div>
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Rahul Sharma"></div>
+      <div class="form-group"><label>Mobile Number</label><input type="tel" placeholder="+91 98765 43210"></div>
+      <div class="form-group"><label>City</label><select><option>Gurugram</option><option>Delhi</option><option>Bengaluru</option><option>Mumbai</option><option>Hyderabad</option></select></div>
+      <button class="btn-primary" style="width:100%" onclick="alert('OTP sent to your mobile! 🎉')">Send OTP →</button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.8rem;color:var(--gray-light)">By signing up you agree to our Terms & Privacy Policy</p>`;
+  } else if(type==='host'){
+    b.innerHTML=`
+      <h2>List your car, start earning</h2>
+      <p>Takes 10 minutes. Your car gets verified within 24 hours.</p>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Priya Gupta"></div>
+      <div class="form-group"><label>Mobile</label><input type="tel" placeholder="+91 98765 43210"></div>
+      <div class="form-group"><label>Car Make & Model</label><input type="text" placeholder="Hyundai Creta SX 2023"></div>
+      <div class="form-group"><label>Registration Number</label><input type="text" placeholder="HR 26 AB 1234"></div>
+      <div class="form-group"><label>Expected daily price (₹)</label><input type="number" placeholder="1500"></div>
+      <button class="btn-primary" style="width:100%" onclick="alert('Great! Our team will call you within 2 hours to complete verification 🚗')">Submit →</button>`;
+  } else {
+    b.innerHTML=`
+      <h2>Book this car</h2>
+      <p>Confirm your booking details below.</p>
+      <div class="form-group"><label>Pick-up Date & Time</label><input type="datetime-local"></div>
+      <div class="form-group"><label>Return Date & Time</label><input type="datetime-local"></div>
+      <div class="form-group"><label>Purpose (optional)</label><select><option>Leisure / Weekend Trip</option><option>Outstation</option><option>Daily commute</option><option>Business meeting</option></select></div>
+      <div style="background:var(--cream);padding:1rem;border-radius:2px;margin-bottom:1.2rem;font-size:0.875rem">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>2 days × ₹1,199</span><span>₹2,398</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Insurance</span><span>₹240</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Platform fee</span><span>₹120</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:600;border-top:1px solid var(--gray-pale);padding-top:8px"><span>Total</span><span>₹2,758</span></div>
+      </div>
+      <button class="btn-primary" style="width:100%" onclick="alert('Redirecting to payment... 🔒')">Pay via UPI →</button>`;
+  }
+  m.classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
+
+/* ── PLAN TABS ── */
+function showPlan(id){
+  document.querySelectorAll('.plan-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.plan-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('plan-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+/* ── FADE IN ── */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+renderCars();
+calcEarnings();
+</script>
+</body>
+</html>
